@@ -1,0 +1,9 @@
+<h1>New Topic</h1>
+
+<%= form_for @changeset, topic_path(@conn, :create), fn f -> %>
+  <div>
+    <%= text_input f, :title, placeholder: "Title"  %>
+  </div>
+
+  <%= submit "Save Topic" %>
+<% end %>
