@@ -3,7 +3,10 @@
 <%= form_for @changeset, topic_path(@conn, :create), fn f -> %>
   <div>
     <%= text_input f, :title, placeholder: "Title"  %>
+    <%= error_tag f, :title  %>
   </div>
 
-  <%= submit "Save Topic" %>
+  <div>
+    <%= submit "Save Topic" %>
+  </div>
 <% end %>
