@@ -30,7 +30,7 @@ defmodule Discuss.TopicController do
     topic = Repo.get(Topic, id)
     changeset = Topic.changeset(topic)
 
-    render conn, "edit.html", changeset: changeset
+    render conn, "edit.html", topic: topic, changeset: changeset
   end
 
   def update(conn, %{"id" => id, "topic" => params}) do
@@ -43,7 +43,7 @@ defmodule Discuss.TopicController do
         |> put_flash(:info, "Topic ##{id} updated successfully")
         |> redirect(to: topic_path(conn, :index))
       {:error, changeset} ->
-        render conn, "edit.html", changeset: changeset
+        render conn, "edit.html", topic: topic, changeset: changeset
     end
   end
 end
