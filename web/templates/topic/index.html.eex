@@ -2,6 +2,10 @@
 
 <ul>
   <%= for topic <- @topics do %>
-    <li><%= topic.title %> - <%= link to: topic_path(@conn, :edit, topic.id) do %><small>edit</small><% end %></li>
+    <li>
+      <%= topic.title %> -
+        <%= link to: topic_path(@conn, :edit, topic) do %><small>edit</small><% end %> /
+        <%= link to: topic_path(@conn, :delete, topic), method: :delete do %><small>destroy</small><% end %>
+    </li>
   <% end %>
 </ul>
