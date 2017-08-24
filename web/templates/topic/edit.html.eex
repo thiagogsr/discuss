@@ -1,1 +1,12 @@
 <h1>Edit Topic #<%= @changeset.data.id %></h1>
+
+<%= form_for @changeset, topic_path(@conn, :update, @changeset.data.id), fn f -> %>
+  <div>
+    <%= text_input f, :title, placeholder: "Title"  %>
+    <%= error_tag f, :title  %>
+  </div>
+
+  <div>
+    <%= submit "Save Topic" %>
+  </div>
+<% end %>
