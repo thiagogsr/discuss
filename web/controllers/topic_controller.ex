@@ -58,7 +58,7 @@ defmodule Discuss.TopicController do
         conn
         |> put_flash(:info, "Topic ##{id} destroyed successfully")
         |> redirect(to: topic_path(conn, :index))
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_flash(:error, "An error occurred. Try again")
         |> redirect(to: topic_path(conn, :index))
