@@ -10,3 +10,7 @@
     <%= submit "Save Topic" %>
   </div>
 <% end %>
+
+<div>
+  <%= link to: topic_path(@conn, :index) do %><small>list all</small><% end %>
+</div>

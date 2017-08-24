@@ -4,3 +4,7 @@
   <%= link to: topic_path(@conn, :edit, @topic) do %><small>edit</small><% end %> /
   <%= link to: topic_path(@conn, :delete, @topic), method: :delete do %><small>destroy</small><% end %>
 </div>
+
+<div>
+  <%= link to: topic_path(@conn, :index) do %><small>list all</small><% end %>
+</div>
