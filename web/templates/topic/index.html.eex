@@ -2,6 +2,6 @@
 
 <ul>
   <%= for topic <- @topics do %>
-    <li><%= topic.title %></li>
+    <li><%= topic.title %> - <%= link to: topic_path(@conn, :edit, topic.id) do %><small>edit</small><% end %></li>
   <% end %>
 </ul>
