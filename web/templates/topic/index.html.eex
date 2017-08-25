@@ -1,4 +1,6 @@
- <h1>Topics <%= link to: topic_path(@conn, :new) do %><small>new</small><% end %></h1>
+<h1>Topics <%= link to: topic_path(@conn, :new) do %><small>new</small><% end %></h1>
+
+<hr />
 
 <ul>
   <%= for topic <- @topics do %>
