@@ -2,6 +2,8 @@
 
 To start your Phoenix app:
 
+  * Copy `config/ueberauth.secret.exs.sample` to `config/ueberauth.secret.exs`
+  * Export your environment variables or replace them by hard coded variables 
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
   * Install Node.js dependencies with `npm install`
