@@ -55,9 +55,40 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
-channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+let channel = socket.channel("comment:all", {})
+let commentField = document.querySelector("#add-comment")
+
+if (commentField) {
+  let submitComment = document.querySelector("#submit-comment")
+  let comments = document.querySelector("#comments")
+
+  let addComment = function() {
+    if (commentField.value === "") {
+      return
+    }
+    channel.push("new_comment", {body: commentField.value})
+    commentField.value = ""
+  }
+
+  commentField.addEventListener("keypress", event => {
+    if(event.keyCode === 13) {
+      addComment()
+    }
+  })
+
+  submitComment.addEventListener("click", event => {
+    addComment()
+  })
+
+  channel.on("new_comment", payload => {
+    let comment = document.createElement("li")
+    comment.innerText = `${Date()} ${payload.body}`
+    comments.appendChild(comment)
+  })
+
+  channel.join()
+    .receive("ok", resp => { console.log("Joined successfully", resp) })
+    .receive("error", resp => { console.log("Unable to join", resp) })
+}
 
 export default socket
