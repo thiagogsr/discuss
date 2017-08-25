@@ -16,6 +16,13 @@ defmodule Discuss.AuthController do
     |> save_cookie(conn)
   end
 
+  def signout(conn, _params) do
+    conn
+    |> put_flash(:info, "Signed out successfully")
+    |> configure_session(drop: true)
+    |> redirect(to: topic_path(conn, :index))
+  end
+
   defp save_cookie(result, conn) do
     case result do
       {:ok, user} ->
