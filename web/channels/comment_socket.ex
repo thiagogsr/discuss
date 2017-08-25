@@ -29,8 +29,8 @@ defmodule Discuss.CommentSocket do
       {:ok, user_id} ->
         user = Repo.get!(User, user_id)
         {:ok, assign(socket, :user, user)}
-      {:error, reason} ->
-        {:error, reason}
+      {:error, _reason} ->
+        :error
     end
   end
 

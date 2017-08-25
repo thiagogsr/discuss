@@ -12,6 +12,11 @@ defmodule Discuss.CommentChannel do
   end
 
   def handle_in("new_comment", %{"body" => body}, socket) do
+    changeset =
+      socket.assigns.user
+      |> build_assoc(user, :comments)
+      |> Comment.changeset(%Comment{content: body})
+
     broadcast! socket, "new_comment", %{body: body}
     {:noreply, socket}
   end
