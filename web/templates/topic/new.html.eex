@@ -1,6 +1,7 @@
-<h1>New Topic <%= link to: topic_path(@conn, :index) do %><small>list all</small><% end %></h1>
-
-<hr />
+<h1>
+  New Topic
+  <%= link to: topic_path(@conn, :index) do %><small>list all</small><% end %>
+</h1>
 
 <%= form_for @changeset, topic_path(@conn, :create), fn f -> %>
   <div>

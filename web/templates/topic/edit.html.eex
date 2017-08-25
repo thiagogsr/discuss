@@ -3,8 +3,6 @@
   <%= link to: topic_path(@conn, :index) do %><small>list all</small><% end %>
 </h1>
 
-<hr />
-
 <%= form_for @changeset, topic_path(@conn, :update, @topic), fn f -> %>
   <div>
     <%= text_input f, :title, placeholder: "Title"  %>

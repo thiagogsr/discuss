@@ -1,11 +1,12 @@
-<h1>Topics <%= link to: topic_path(@conn, :index) do %><small>list all</small><% end %></h1>
-
-<hr />
-
-<h2>
+<h1>
   <%= @topic.title %>
 
   <%= if @conn.assigns[:user] && @conn.assigns.user.id == @topic.user_id do %>
-    <%= link to: topic_path(@conn, :edit, @topic) do %><small>edit</small><% end %>
+    <%= link to: topic_path(@conn, :edit, @topic) do %>
+      <small>edit</small>
+    <% end %>
+    <small>/</small>
   <% end %>
-</h2>
+
+  <%= link to: topic_path(@conn, :index) do %><small>list all</small><% end %>
+</h1>
