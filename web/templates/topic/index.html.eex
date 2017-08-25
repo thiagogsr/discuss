@@ -1,4 +1,7 @@
- <h1>Topics <%= link to: topic_path(@conn, :new) do %><small>new</small><% end %></h1>
+<h1>
+  Topics
+  <%= link to: topic_path(@conn, :new) do %><small>new</small><% end %>
+</h1>
 
 <ul>
   <%= for topic <- @topics do %>
@@ -7,8 +10,13 @@
 
         <%= if @conn.assigns[:user] && @conn.assigns.user.id == topic.user_id do %>
           -
-          <%= link to: topic_path(@conn, :edit, topic) do %><small>edit</small><% end %> /
-          <%= link to: topic_path(@conn, :delete, topic), method: :delete do %><small>destroy</small><% end %>
+          <%= link to: topic_path(@conn, :edit, topic) do %>
+            <small>edit</small>
+          <% end %>
+          <small>/</small>
+          <%= link to: topic_path(@conn, :delete, topic), method: :delete do %>
+            <small>destroy</small>
+          <% end %>
         <% end %>
     </li>
   <% end %>
