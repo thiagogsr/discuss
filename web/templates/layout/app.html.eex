@@ -16,7 +16,11 @@
       <header class="header">
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
-            <li>Hi <%= @conn.assigns.user.email %></li>
+            <%= if @conn.assigns[:user] do %>
+              <li>Hi <%= @conn.assigns.user.email %></li>
+            <% else %>
+              <li><%= link "Sign in with Github", to: auth_path(@conn, :request, "github") %></li>
+            <% end %>
           </ul>
         </nav>
         <span class="logo"></span>
