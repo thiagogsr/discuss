@@ -1,4 +1,9 @@
-<h1>Edit Topic #<%= @topic.id %></h1>
+<h1>
+  Edit Topic #<%= @topic.id %>
+  <%= link to: topic_path(@conn, :index) do %><small>list all</small><% end %>
+</h1>
+
+<hr />
 
 <%= form_for @changeset, topic_path(@conn, :update, @topic), fn f -> %>
   <div>
@@ -6,11 +11,9 @@
     <%= error_tag f, :title  %>
   </div>
 
+  <br />
+
   <div>
     <%= submit "Save Topic" %>
   </div>
 <% end %>
-
-<div>
-  <%= link to: topic_path(@conn, :index) do %><small>list all</small><% end %>
-</div>
