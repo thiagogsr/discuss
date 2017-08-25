@@ -3,9 +3,13 @@
 <ul>
   <%= for topic <- @topics do %>
     <li>
-      <%= link to: topic_path(@conn, :show, topic) do %><%= topic.title %><% end %> -
-        <%= link to: topic_path(@conn, :edit, topic) do %><small>edit</small><% end %> /
-        <%= link to: topic_path(@conn, :delete, topic), method: :delete do %><small>destroy</small><% end %>
+      <%= link to: topic_path(@conn, :show, topic) do %><%= topic.title %><% end %>
+
+        <%= if @conn.assigns[:user] && @conn.assigns.user.id == topic.user_id do %>
+          -
+          <%= link to: topic_path(@conn, :edit, topic) do %><small>edit</small><% end %> /
+          <%= link to: topic_path(@conn, :delete, topic), method: :delete do %><small>destroy</small><% end %>
+        <% end %>
     </li>
   <% end %>
 </ul>
