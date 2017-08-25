@@ -66,7 +66,11 @@ if (commentField) {
     if (commentField.value === "") {
       return
     }
-    channel.push("new_comment", {body: commentField.value})
+    var body = {
+      content: commentField.value,
+      topic_id: window.location.pathname.split('/')[1]
+    }
+    channel.push("new_comment", body)
     commentField.value = ""
   }
 
@@ -81,8 +85,8 @@ if (commentField) {
   })
 
   channel.on("new_comment", payload => {
-    let comment = document.createElement("li")
-    comment.innerText = `${Date()} ${payload.body}`
+    let comment = document.createElement("div")
+    comment.innerHTML = `${payload.content}<br /><small>by ${payload.user_email} at ${payload.inserted_at}</small>`
     comments.appendChild(comment)
   })
 

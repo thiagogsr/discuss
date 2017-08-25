@@ -19,4 +19,4 @@
 <input type="text" id="add-comment" placeholder="Add comment..." autofocus />
 <button id="submit-comment">Add</button>
 
-<ul id="comments"></ul>
+<div id="comments"></div>
