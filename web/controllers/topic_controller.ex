@@ -2,6 +2,10 @@ defmodule Discuss.TopicController do
   use Discuss.Web, :controller
 
   alias Discuss.Topic
+  alias Discuss.Plugs.RequireAuth
+
+  plug RequireAuth when action in [:new, :create, :edit, :update, :delete]
+  plug :check_topic_owner when action in [:edit, :update, :delete]
 
   def index(conn, _params) do
     topics = Repo.all(Topic)
@@ -14,7 +18,10 @@ defmodule Discuss.TopicController do
   end
 
   def create(conn, %{"topic" => topic}) do
-    changeset = Topic.changeset(%Topic{}, topic)
+    changeset =
+      conn.assigns.user
+      |> build_assoc(:topics)
+      |> Topic.changeset(topic)
 
     case Repo.insert(changeset) do
       {:ok, _topic} ->
@@ -58,10 +65,21 @@ defmodule Discuss.TopicController do
         conn
         |> put_flash(:info, "Topic ##{id} destroyed successfully")
         |> redirect(to: topic_path(conn, :index))
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_flash(:error, "An error occurred. Try again")
         |> redirect(to: topic_path(conn, :index))
+    end
+  end
+
+  defp check_topic_owner(%{params: %{"id" => id}} = conn, _params) do
+    if conn.assigns.user.id == Repo.get(Topic, id).user_id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "Good idea, but try it in another app")
+      |> redirect(to: topic_path(conn, :index))
+      |> halt
     end
   end
 end

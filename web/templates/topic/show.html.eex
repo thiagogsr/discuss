@@ -1,9 +1,11 @@
 <h1><%= @topic.title %></h1>
 
-<div>
-  <%= link to: topic_path(@conn, :edit, @topic) do %><small>edit</small><% end %> /
-  <%= link to: topic_path(@conn, :delete, @topic), method: :delete do %><small>destroy</small><% end %>
-</div>
+<%= if @conn.assigns[:user] && @conn.assigns.user.id == @topic.user_id do %>
+  <div>
+    <%= link to: topic_path(@conn, :edit, @topic) do %><small>edit</small><% end %> /
+    <%= link to: topic_path(@conn, :delete, @topic), method: :delete do %><small>destroy</small><% end %>
+  </div>
+<% end %>
 
 <div>
   <%= link to: topic_path(@conn, :index) do %><small>list all</small><% end %>
