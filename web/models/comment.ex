@@ -4,7 +4,7 @@ defmodule Discuss.Comment do
   schema "comments" do
     field :content, :string
     belongs_to :topic, Discuss.Topic
-    belongs_to :comment, Discuss.Comment
+    belongs_to :user, Discuss.User
 
     timestamps()
   end
