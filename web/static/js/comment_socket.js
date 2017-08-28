@@ -65,7 +65,12 @@ var CommentSocket = (function(global) {
 
   fn._appendComment = function(payload) {
     var comment = document.createElement("div")
-    comment.innerHTML = `${payload.content}<br /><small>by ${payload.user_email} at ${payload.inserted_at}</small>`
+    comment.className = "comment"
+    comment.innerHTML = `${payload.content}`
+    var author = document.createElement("div")
+    author.className = "author"
+    author.innerHTML = `by ${payload.user_email} at ${payload.inserted_at}`
+    comment.appendChild(author)
     this.comments.appendChild(comment)
   }
 
