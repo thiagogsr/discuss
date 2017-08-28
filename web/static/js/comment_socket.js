@@ -26,7 +26,7 @@ var CommentSocket = (function(global) {
     this.commentField.addEventListener("keypress", _.bind(this._submitComment, this))
     this.submitComment.addEventListener("click", _.bind(this._addComment, this))
     this.channel.on("load_comments", _.bind(this._renderComments, this))
-    this.channel.on("new_comment", _.bind(this._appendComment, this))
+    this.channel.on("new_comment", _.bind(this._prependComment, this))
   }
 
   fn._joinChannel = function() {
@@ -64,6 +64,16 @@ var CommentSocket = (function(global) {
   }
 
   fn._appendComment = function(payload) {
+    var comment = this._buildComment(payload)
+    this.comments.appendChild(comment)
+  }
+
+  fn._prependComment = function(payload) {
+    var comment = this._buildComment(payload)
+    this.comments.prepend(comment)
+  }
+
+  fn._buildComment = function(payload) {
     var comment = document.createElement("div")
     comment.className = "comment"
     comment.innerHTML = `${payload.content}`
@@ -71,7 +81,7 @@ var CommentSocket = (function(global) {
     author.className = "author"
     author.innerHTML = `by ${payload.user_email} at ${payload.inserted_at}`
     comment.appendChild(author)
-    this.comments.appendChild(comment)
+    return comment
   }
 
   fn._renderComments = function(payload) {
