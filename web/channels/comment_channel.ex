@@ -1,6 +1,8 @@
 defmodule Discuss.CommentChannel do
   use Phoenix.Channel
 
+  import Ecto.Query
+
   alias Discuss.Repo
   alias Discuss.Comment
   alias Discuss.Topic
@@ -13,6 +15,19 @@ defmodule Discuss.CommentChannel do
 
   def join("comment:" <> _private_room_id, _params, _socket) do
     {:error, %{reason: "unauthorized"}}
+  end
+
+  def handle_in("load_comments", %{"topic_id" => topic_id}, socket) do
+    comments =
+      Comment
+      |> Ecto.Query.where(topic_id: ^topic_id)
+      |> Repo.all
+      |> Repo.preload(:user)
+
+    comments_map = Enum.map comments, fn c -> comment_to_map(c) end
+    push socket, "load_comments", %{comments: comments_map}
+
+    {:noreply, socket}
   end
 
   def handle_in("new_comment", %{"content" => content} = payload, socket) do
