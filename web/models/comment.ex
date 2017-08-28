@@ -1,4 +1,8 @@
 defmodule Discuss.Comment do
+  @moduledoc """
+    Model to represent a Comment
+  """
+
   use Discuss.Web, :model
 
   schema "comments" do

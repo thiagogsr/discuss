@@ -1,4 +1,8 @@
 defmodule Discuss do
+  @moduledoc """
+    Application setup
+  """
+
   use Application
 
   alias Discuss.Endpoint

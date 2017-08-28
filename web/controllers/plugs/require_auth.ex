@@ -1,4 +1,8 @@
 defmodule Discuss.Plugs.RequireAuth do
+  @moduledoc """
+    Plug to require auth before enter in controller action
+  """
+
   import Plug.Conn
   import Phoenix.Controller
 

@@ -1,4 +1,8 @@
 defmodule Discuss.Plugs.SetUser do
+  @moduledoc """
+    Plug to assign user to `conn` when it is logged in
+  """
+
   import Plug.Conn
 
   alias Discuss.Repo

@@ -1,4 +1,8 @@
 defmodule Discuss.User do
+  @moduledoc """
+    Model to represent an User
+  """
+
   use Discuss.Web, :model
 
   schema "users" do

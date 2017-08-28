@@ -1,4 +1,8 @@
 defmodule Discuss.CommentChannel do
+  @moduledoc """
+    Channel to handle comments events using websockets
+  """
+
   use Phoenix.Channel
 
   import Ecto.Query
