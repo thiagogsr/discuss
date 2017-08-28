@@ -12,7 +12,7 @@ var CommentSocket = (function(global) {
 
   var fn = CommentSocket.prototype
 
-  fn.init = () => {
+  fn.init = function() {
     if (!this.commentField) {
       return
     }
@@ -22,34 +22,34 @@ var CommentSocket = (function(global) {
     this._loadComments()
   }
 
-  fn._bindAll = () => {
+  fn._bindAll = function() {
     this.commentField.addEventListener("keypress", _.bind(this._submitComment, this))
     this.submitComment.addEventListener("click", _.bind(this._addComment, this))
     this.channel.on("load_comments", _.bind(this._renderComments, this))
     this.channel.on("new_comment", _.bind(this._appendComment, this))
   }
 
-  fn._joinChannel = () => {
+  fn._joinChannel = function() {
     this.channel.join()
       .receive("ok", resp => { console.log("Joined successfully", resp) })
       .receive("error", resp => { console.log("Unable to join", resp) })
   }
 
-  fn._loadComments = () => {
+  fn._loadComments = function() {
     this.channel.push("load_comments", { topic_id: this._topicId() })
   }
 
-  fn._submitComment = event => {
+  fn._submitComment = function(event) {
     if(event.keyCode === 13) {
       this._addComment()
     }
   }
 
-  fn._topicId = () => {
+  fn._topicId = function() {
     return global.location.pathname.split('/')[1]
   }
 
-  fn._addComment = () => {
+  fn._addComment = function() {
     if (this.commentField.value === "") {
       return
     }
@@ -63,13 +63,13 @@ var CommentSocket = (function(global) {
     this.commentField.value = ""
   }
 
-  fn._appendComment = payload => {
+  fn._appendComment = function(payload) {
     var comment = document.createElement("div")
     comment.innerHTML = `${payload.content}<br /><small>by ${payload.user_email} at ${payload.inserted_at}</small>`
     this.comments.appendChild(comment)
   }
 
-  fn._renderComments = payload => {
+  fn._renderComments = function(payload) {
     var comments = payload.comments
     for (var index in comments) {
       this._appendComment(comments[index])
