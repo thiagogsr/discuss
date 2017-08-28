@@ -20,7 +20,8 @@ defmodule Discuss.CommentChannel do
   def handle_in("load_comments", %{"topic_id" => topic_id}, socket) do
     comments =
       Comment
-      |> Ecto.Query.where(topic_id: ^topic_id)
+      |> where(topic_id: ^topic_id)
+      |> order_by(desc: :inserted_at)
       |> Repo.all
       |> Repo.preload(:user)
 
