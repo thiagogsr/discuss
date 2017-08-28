@@ -65,23 +65,26 @@ var CommentSocket = (function(global) {
 
   fn._appendComment = function(payload) {
     var comment = this._buildComment(payload)
-    this.comments.appendChild(comment)
+    this.comments.insertAdjacentHTML('beforeend', comment)
   }
 
   fn._prependComment = function(payload) {
     var comment = this._buildComment(payload)
-    this.comments.prepend(comment)
+    this.comments.insertAdjacentHTML('afterbegin', comment)
   }
 
   fn._buildComment = function(payload) {
-    var comment = document.createElement("div")
-    comment.className = "comment"
-    comment.innerHTML = `${payload.content}`
-    var author = document.createElement("div")
-    author.className = "author"
-    author.innerHTML = `by ${payload.user_email} at ${payload.inserted_at}`
-    comment.appendChild(author)
-    return comment
+    var markup = [
+      '<div class="comment">',
+      '<%- comment.content %>',
+      '<div class="author">',
+      'by <%- comment.user_email %> at <%- comment.inserted_at %>',
+      '</div>',
+      '</div>'
+    ].join("\n");
+
+    var template = _.template(markup)
+    return template({ comment: payload })
   }
 
   fn._renderComments = function(payload) {
