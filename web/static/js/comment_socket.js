@@ -23,10 +23,21 @@ var CommentSocket = (function(global) {
   }
 
   fn._bindAll = function() {
-    this.commentField.addEventListener("keypress", _.bind(this._submitComment, this))
-    this.submitComment.addEventListener("click", _.bind(this._addComment, this))
-    this.channel.on("load_comments", _.bind(this._renderComments, this))
-    this.channel.on("new_comment", _.bind(this._prependComment, this))
+    _.bindAll(this, '_submitComment', '_addComment', '_renderComments',
+              '_prependComment', '_removeComment')
+
+    this.commentField.addEventListener("keypress", this._submitComment)
+    this.submitComment.addEventListener("click", this._addComment)
+    this.channel.on("load_comments", this._renderComments)
+    this.channel.on("new_comment", this._prependComment)
+    this.channel.on("remove_comment", this._removeCommentOfDOM)
+  }
+
+  fn._bindComments = function() {
+    var self = this
+    document.querySelectorAll('.remove').forEach(function(el) {
+      el.addEventListener("click", self._removeComment)
+    })
   }
 
   fn._joinChannel = function() {
@@ -66,17 +77,22 @@ var CommentSocket = (function(global) {
   fn._appendComment = function(payload) {
     var comment = this._buildComment(payload)
     this.comments.insertAdjacentHTML('beforeend', comment)
+    this._bindComments()
   }
 
   fn._prependComment = function(payload) {
     var comment = this._buildComment(payload)
     this.comments.insertAdjacentHTML('afterbegin', comment)
+    this._bindComments()
   }
 
   fn._buildComment = function(payload) {
     var markup = [
       '<div class="comment">',
       '<%- comment.content %>',
+      '<% if(comment.can_remove) { %>',
+      '<a href="#" class="remove" data-id="<%- comment.id %>">&times;</a>',
+      '<% } %>',
       '<div class="author">',
       'by <%- comment.user_email %> at <%- comment.inserted_at %>',
       '</div>',
@@ -92,6 +108,19 @@ var CommentSocket = (function(global) {
     for (var index in comments) {
       this._appendComment(comments[index])
     }
+  }
+
+  fn._removeComment = function(event) {
+    var commentId = event.target.dataset.id
+    this.channel.push("remove_comment", { comment_id: commentId })
+    return false
+  }
+
+  fn._removeCommentOfDOM = function(payload) {
+    var commentId = payload.comment_id,
+        comment = document.querySelector('[data-id="' + commentId + '"]')
+
+    comment.parentNode.remove()
   }
 
   return CommentSocket
