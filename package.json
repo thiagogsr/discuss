@@ -15,6 +15,7 @@
     "brunch": "2.10.9",
     "clean-css-brunch": "2.10.0",
     "eslint": "^4.5.0",
+    "eslint-brunch": "^3.12.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.1.1",
