@@ -3,6 +3,7 @@ defmodule Discuss.CommentSocket do
 
   alias Discuss.User
   alias Discuss.Repo
+  alias Phoenix.Token
 
   @max_age 2 * 7 * 24 * 60 * 60
 
@@ -25,7 +26,7 @@ defmodule Discuss.CommentSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   def connect(%{"token" => token}, socket) do
-    case Phoenix.Token.verify(socket, "user socket", token, max_age: @max_age) do
+    case Token.verify(socket, "user socket", token, max_age: @max_age) do
       {:ok, user_id} ->
         user = Repo.get!(User, user_id)
         {:ok, assign(socket, :user, user)}
@@ -36,7 +37,8 @@ defmodule Discuss.CommentSocket do
 
   def connect(_params, _socket), do: :error
 
-  # Socket id's are topics that allow you to identify all sockets for a given user:
+  # Socket id's are topics that allow you to identify all sockets for a given
+  # user:
   #
   #     def id(socket), do: "users_socket:#{socket.assigns.user_id}"
   #

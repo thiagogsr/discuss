@@ -45,7 +45,8 @@ defmodule Discuss.CommentChannel do
       |> Comment.changeset(%{content: content})
 
     comment =
-      Repo.insert!(changeset)
+      changeset
+      |> Repo.insert!
       |> Repo.preload(:user)
 
     broadcast! socket, "new_comment", comment_to_map(comment, current_user)

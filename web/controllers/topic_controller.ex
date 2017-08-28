@@ -60,7 +60,7 @@ defmodule Discuss.TopicController do
   end
 
   def delete(conn, %{"id" => id}) do
-    case Repo.get!(Topic, id) |> Repo.delete do
+    case Topic |> Repo.get!(id) |> Repo.delete do
       {:ok, _topic} ->
         conn
         |> put_flash(:info, "Topic ##{id} destroyed successfully")
