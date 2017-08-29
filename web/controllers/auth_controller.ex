@@ -11,7 +11,8 @@ defmodule Discuss.AuthController do
              email: auth.info.email,
              token: auth.credentials.token}
 
-    User.changeset(%User{}, user)
+    %User{}
+    |> User.changeset(user)
     |> insert_or_update_user
     |> save_cookie(conn)
   end

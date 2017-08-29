@@ -1,0 +1,11 @@
+PreCommit:
+  Credo:
+    enabled: true
+    required_executable: 'mix'
+
+  EsLint:
+    enabled: true
+    required_executable: './node_modules/.bin/eslint'
+    include:
+      - 'web/static/js/**/*.js'
+    command: ['./node_modules/.bin/eslint', 'web/static/js']

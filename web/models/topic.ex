@@ -1,4 +1,8 @@
 defmodule Discuss.Topic do
+  @moduledoc """
+    Model to represent a Topic
+  """
+
   use Discuss.Web, :model
 
   schema "topics" do
